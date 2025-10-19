@@ -1,0 +1,27 @@
+[package]
+cairo-version = "2.12.2"
+name = "world_factory"
+version = "1.7.1"
+edition = "2024_07"
+license = "MIT"
+
+[[target.starknet-contract]]
+sierra = true
+casm = true
+build-external-contracts = ["dojo::world::world_contract::world"]
+
+[dependencies]
+dojo = "1.7.1"
+starknet = "2.12.2"
+
+[dev-dependencies]
+cairo_test = "2.12.2"
+dojo_snf_test = "1.7.1"
+
+[features]
+default = []
+
+[profile.sepolia]
+
+[tool.scarb]
+allow-prebuilt-plugins = ["dojo_cairo_macros"]
