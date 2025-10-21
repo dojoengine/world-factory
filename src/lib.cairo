@@ -1,5 +1,5 @@
 //! Dynamic world factory configured through dojo models.
-mod lib2;
+//mod lib2;
 
 use starknet::{ClassHash, ContractAddress};
 
@@ -125,20 +125,8 @@ pub mod factory {
             // and pass the init arguments to the contract.
             // This example considers all the dojo_init to be without parameters.
             for (selector, _, init_args) in factory_config.contracts.span() {
-                let addr = dojo_contracts_addresses.get(*selector);
-                match starknet::syscalls::call_contract_syscall(
-                    addr.try_into().unwrap(), dojo::world::world::DOJO_INIT_SELECTOR, init_args.span(),
-                ) {
-                    Ok(_) => {},
-                    Err(error) => {
-                        panic!(
-                            "Failed to call dojo_init for contract {:?} at address {}: {:?}",
-                            selector,
-                            addr,
-                            error,
-                        );
-                    },
-                }
+                let _addr = dojo_contracts_addresses.get(*selector);
+                deployed_world.init_contract(*selector, init_args.span());
             }
 
             // Make any other call as necessary (set the world config for instance).
@@ -159,7 +147,7 @@ pub mod factory {
     impl InternalImpl of InternalTrait {
         /// Default world storage for the factory.
         fn world_default(self: @ContractState) -> dojo::world::WorldStorage {
-            self.world(@"factory")
+            self.world(@"wf")
         }
 
         /// Deploys a new world and returns its address.

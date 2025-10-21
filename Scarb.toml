@@ -24,4 +24,4 @@ default = []
 [profile.sepolia]
 
 [tool.scarb]
-allow-prebuilt-plugins = ["dojo_cairo_macros"]
+allow-prebuilt-plugins = ["dojo_cairo_macros", "snforge_std"]
