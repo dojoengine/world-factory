@@ -21,6 +21,7 @@ dojo_snf_test = "1.7.1"
 [features]
 default = []
 
+[profile.swdebugsepolia]
 [profile.sepolia]
 
 [tool.scarb]

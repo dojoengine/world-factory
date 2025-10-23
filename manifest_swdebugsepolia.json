@@ -1,8 +1,8 @@
 {
   "world": {
     "class_hash": "0x57994b6a75fad550ca18b41ee82e2110e158c59028c4478109a67965a0e5b1e",
-    "address": "0x6dff4f9293504572c7fef37f0d9bfcd11665b9cb96d0b8fb6e93d1fde935c45",
-    "seed": "wfactory_1",
+    "address": "0x3418bb8121f0a9b82d5c5d0cdfcb7d59e8cdfb2a8a479dca187677b9fd32c77",
+    "seed": "world_factory_1",
     "name": "world_factory",
     "entrypoints": [
       "uuid",
@@ -1479,8 +1479,8 @@
   },
   "contracts": [
     {
-      "address": "0x6041380026a8e033c39da1d97e27e9650de03c9d1673f3d0212378892e3b95b",
-      "class_hash": "0x85d18fefd841dd99889460bde72fb23b47413e73ee99f6df2e26e0f3005f19",
+      "address": "0x7c55b732109191635601f971dfd88619f8622b6a328b6878c205d4ae7fc233a",
+      "class_hash": "0x1f76bc4af2ce55a82cdc032e0c866652af194684ac5bb3fe7774c9cd52e97c5",
       "abi": [
         {
           "type": "impl",
@@ -1535,69 +1535,29 @@
         {
           "type": "impl",
           "name": "IWorldFactoryImpl",
-          "interface_name": "world_factory::interface::IWorldFactory"
-        },
-        {
-          "type": "enum",
-          "name": "core::bool",
-          "variants": [
-            {
-              "name": "False",
-              "type": "()"
-            },
-            {
-              "name": "True",
-              "type": "()"
-            }
-          ]
+          "interface_name": "world_factory::IWorldFactory"
         },
         {
           "type": "struct",
-          "name": "core::array::Span::<core::felt252>",
+          "name": "world_factory::WorldConfig",
           "members": [
             {
-              "name": "snapshot",
-              "type": "@core::array::Array::<core::felt252>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "world_factory::factory_models::FactoryConfigContract",
-          "members": [
-            {
-              "name": "selector",
+              "name": "param1",
               "type": "core::felt252"
             },
             {
-              "name": "class_hash",
-              "type": "core::starknet::class_hash::ClassHash"
-            },
-            {
-              "name": "init_args",
-              "type": "core::array::Span::<core::felt252>"
-            },
-            {
-              "name": "writer_of_resources",
-              "type": "core::array::Span::<core::felt252>"
-            },
-            {
-              "name": "owner_of_resources",
-              "type": "core::array::Span::<core::felt252>"
+              "name": "param2",
+              "type": "core::felt252"
             }
           ]
         },
         {
           "type": "struct",
-          "name": "world_factory::factory_models::FactoryConfig",
+          "name": "world_factory::FactoryConfig",
           "members": [
             {
               "name": "version",
               "type": "core::felt252"
-            },
-            {
-              "name": "max_actions",
-              "type": "core::integer::u64"
             },
             {
               "name": "world_class_hash",
@@ -1608,12 +1568,8 @@
               "type": "core::byte_array::ByteArray"
             },
             {
-              "name": "default_namespace_writer_all",
-              "type": "core::bool"
-            },
-            {
               "name": "contracts",
-              "type": "core::array::Array::<world_factory::factory_models::FactoryConfigContract>"
+              "type": "core::array::Array::<(core::felt252, core::starknet::class_hash::ClassHash, core::array::Array::<core::felt252>)>"
             },
             {
               "name": "models",
@@ -1627,7 +1583,7 @@
         },
         {
           "type": "interface",
-          "name": "world_factory::interface::IWorldFactory",
+          "name": "world_factory::IWorldFactory",
           "items": [
             {
               "type": "function",
@@ -1640,6 +1596,10 @@
                 {
                   "name": "factory_config_version",
                   "type": "core::felt252"
+                },
+                {
+                  "name": "world_config",
+                  "type": "world_factory::WorldConfig"
                 }
               ],
               "outputs": [],
@@ -1651,7 +1611,7 @@
               "inputs": [
                 {
                   "name": "config",
-                  "type": "world_factory::factory_models::FactoryConfig"
+                  "type": "world_factory::FactoryConfig"
                 }
               ],
               "outputs": [],
@@ -1758,7 +1718,7 @@
         },
         {
           "type": "event",
-          "name": "world_factory::factory::factory::Event",
+          "name": "world_factory::factory::Event",
           "kind": "enum",
           "variants": [
             {
@@ -1788,27 +1748,15 @@
   "models": [
     {
       "members": [],
-      "class_hash": "0x20a1588a9d064a03c2f310622e40e1b8ae6252ffcdacb695f4d2688f7426954",
+      "class_hash": "0x69315d71270960d454e8bcdf116f9326c038957af200b1223e00af3daffecfe",
       "tag": "wf-FactoryConfig",
       "selector": "0x3751059678234ede81cb1dcbd857b98ad93598e7a943d1d63547211095dfeac"
     },
     {
       "members": [],
-      "class_hash": "0x3c52fc4ea95036e9ef3b97954ef54b684d33cb88bbea956a7df58bf2614d67e",
-      "tag": "wf-FactoryDeploymentCursor",
-      "selector": "0x752a901a506178e9335c4bd662486b79c44a224939c02af489313a0151052f3"
-    },
-    {
-      "members": [],
-      "class_hash": "0x32f4e8af870aff1f739bcd1e7fbcec6e66730f3e70f4b39fc51dcfd32f50482",
-      "tag": "wf-WorldContract",
-      "selector": "0x25e5951fad9bb986d368279097254bf0bbe3fe621f84231965cfa50deb98d08"
-    },
-    {
-      "members": [],
-      "class_hash": "0x79eeeb50b74da62815471a59e3f4e5f42d60af705ab81491519ce198e39b6d1",
-      "tag": "wf-WorldDeployed",
-      "selector": "0x707adf5a0b9122101a8156f8f35632f2d3a3e43a37f9878209031a6f8d4cfe8"
+      "class_hash": "0x5003853d61267e522ad3b27249861fbfcd1415888e7f45239cbf06d6a68aa64",
+      "tag": "wf-WorldReference",
+      "selector": "0x5b8d5f58fe5e3f5bce98d07b3b1e2add5071451415ce92ba7fcbf3bf76485ec"
     }
   ],
   "events": [],
