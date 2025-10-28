@@ -5,7 +5,7 @@ use dojo_snf_test::{
     ContractDefTrait, NamespaceDef, TestResource, WorldStorageTestTrait, spawn_test_world,
 };
 use fake_world::{IMyContractDispatcher, IMyContractDispatcherTrait, ModelA};
-use snforge_std::{DeclareResultTrait, declare};
+use snforge_std::{CheatSpan, DeclareResultTrait, cheat_caller_address, declare};
 use world_factory::factory_models::{FactoryConfig, FactoryDeploymentCursor};
 use world_factory::interface::{IWorldFactoryDispatcher, IWorldFactoryDispatcherTrait};
 use world_factory::world_models::{WorldContract, WorldDeployed};
@@ -21,8 +21,8 @@ fn deploy_factory() -> (IWorldFactoryDispatcher, WorldStorage) {
         namespace: "wf",
         resources: [
             TestResource::Model("FactoryConfig"), TestResource::Model("FactoryDeploymentCursor"),
-            TestResource::Model("WorldContract"), TestResource::Model("WorldDeployed"),
-            TestResource::Contract("factory"),
+            TestResource::Model("FactoryConfigOwner"), TestResource::Model("WorldContract"),
+            TestResource::Model("WorldDeployed"), TestResource::Contract("factory"),
         ]
             .span(),
     };
@@ -73,6 +73,37 @@ fn test_factory_config() {
     assert!(config.contracts.len() == fake_world_resources.contracts.len());
     assert!(config.models.len() == fake_world_resources.models.len());
     assert!(config.events.len() == fake_world_resources.events.len());
+}
+
+#[test]
+#[should_panic(expected: 'not config owner')]
+fn test_factory_config_owner_only() {
+    let (factory, _factory_world) = deploy_factory();
+
+    let fake_world_resources = fake_world::declare_fake_world();
+
+    let world_class_hash = declare("world").unwrap().contract_class().class_hash;
+
+    let default_namespace: ByteArray = "ns";
+
+    let factory_config = FactoryConfig {
+        version: 1,
+        max_actions: 5,
+        world_class_hash: *world_class_hash,
+        default_namespace,
+        default_namespace_writer_all: true,
+        contracts: fake_world_resources.contracts.clone(),
+        models: fake_world_resources.models.clone(),
+        events: fake_world_resources.events.clone(),
+    };
+
+    factory.set_config(factory_config.clone());
+
+    cheat_caller_address(
+        factory.contract_address, 'OTHER_CONTRACT'.try_into().unwrap(), CheatSpan::TargetCalls(1),
+    );
+
+    factory.set_config(factory_config);
 }
 
 #[test]

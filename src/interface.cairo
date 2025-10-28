@@ -23,6 +23,10 @@ pub trait IWorldFactory<T> {
     /// for very large worlds. This will need to be split into multiple models to not
     /// limit large worlds for using the factory.
     ///
+    /// To ensure that once a config is set, only the writer of the config can edit it,
+    /// the factory will check if the caller address is the writer of the config if it is
+    /// already set (owner_address being non-zero).
+    ///
     /// # Arguments
     ///
     /// * `config` - The configuration of the factory.

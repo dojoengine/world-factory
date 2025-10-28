@@ -12,22 +12,43 @@
 
 #[dojo::contract]
 pub mod factory {
+    use core::num::traits::Zero;
     use dojo::model::ModelStorage;
     use dojo::utils::bytearray_hash;
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
     use starknet::{ClassHash, ContractAddress, SyscallResultTrait};
-    use crate::factory_models::{FactoryConfig, FactoryConfigContract, FactoryDeploymentCursor};
+    use crate::factory_models::{
+        FactoryConfig, FactoryConfigContract, FactoryConfigOwner, FactoryDeploymentCursor,
+    };
     use crate::interface::IWorldFactory;
     use crate::world_models::{WorldContract, WorldDeployed};
 
     mod errors {
         pub const DEPLOYMENT_ALREADY_COMPLETED: felt252 = 'deployment already completed';
+        pub const NOT_CONFIG_OWNER: felt252 = 'not config owner';
     }
 
     #[abi(embed_v0)]
     impl IWorldFactoryImpl of IWorldFactory<ContractState> {
         fn set_config(ref self: ContractState, config: FactoryConfig) {
             let mut factory_world = self.world_default();
+
+            let config_owner: FactoryConfigOwner = factory_world.read_model(config.version);
+
+            if config_owner.contract_address.is_non_zero() {
+                assert(
+                    starknet::get_caller_address() == config_owner.contract_address,
+                    errors::NOT_CONFIG_OWNER,
+                );
+            }
+
+            factory_world
+                .write_model(
+                    @FactoryConfigOwner {
+                        version: config.version, contract_address: starknet::get_caller_address(),
+                    },
+                );
+
             factory_world.write_model(@config);
         }
 

@@ -52,6 +52,7 @@ pub struct FactoryConfigContract {
 }
 
 /// Configuration for the factory that will be used to deploy a world.
+#[derive(Clone)]
 #[dojo::model]
 pub struct FactoryConfig {
     /// The version of the factory configuration.
@@ -75,4 +76,16 @@ pub struct FactoryConfig {
     pub models: Array<ClassHash>,
     /// Events to be registered.
     pub events: Array<ClassHash>,
+}
+
+/// Configuration for the factory that will be used to deploy a world.
+#[dojo::model]
+pub struct FactoryConfigOwner {
+    /// The version of the factory configuration.
+    #[key]
+    pub version: felt252,
+    /// The address of the owner of the config.
+    ///
+    /// This is used to ensure that only the owner of the config can edit it.
+    pub contract_address: ContractAddress,
 }
