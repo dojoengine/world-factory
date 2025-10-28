@@ -1,0 +1,44 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_VERSION: 1.88.0
+
+jobs:
+  cairofmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: "2.12.2"
+      - run: scarb fmt --check
+
+  cairotest:
+    needs: cairofmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: foundry-rs/setup-snfoundry@v3
+      - uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: "2.12.2"
+      - uses: actions/checkout@v3
+      - run: |
+          snforge test
+
+  cairobuild:
+    needs: cairofmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: "2.12.2"
+      - uses: actions/checkout@v3
+      - run: |
+          scarb build
