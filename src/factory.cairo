@@ -35,7 +35,7 @@ pub mod factory {
             let mut factory_world = self.world_default();
             let factory_config: FactoryConfig = factory_world.read_model(factory_config_version);
             let mut cursor: FactoryDeploymentCursor = factory_world
-                .read_model(factory_config_version);
+                .read_model((factory_config_version, name));
 
             let max_actions = cursor.total_actions + factory_config.max_actions;
 

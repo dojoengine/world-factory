@@ -4,11 +4,17 @@ use starknet::{ClassHash, ContractAddress};
 ///
 /// The goal here is to allow the factory to deploy huge worlds in
 /// multiple transactions, with an internal management of the deployment.
+///
+/// Having the `version` and the `name` as keys allows to have multiple deployments
+/// of the same version for different worlds, deployed concurrently.
 #[dojo::model]
 pub struct FactoryDeploymentCursor {
     /// The version of the factory configuration used during the deployment.
     #[key]
     pub version: felt252,
+    /// The name of the deployed world.
+    #[key]
+    pub name: felt252,
     /// The address of the deployed world.
     pub world_address: Option<ContractAddress>,
     /// The cursor for the contracts, counting the number of contracts registered.

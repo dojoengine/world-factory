@@ -47,4 +47,5 @@ version = "1.7.1"
 dependencies = [
  "dojo",
  "dojo_snf_test",
+ "snforge_std",
 ]

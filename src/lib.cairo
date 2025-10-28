@@ -1,10 +1,10 @@
 //! World factory library.
 
 /// The factory contract.
-mod factory;
+pub mod factory;
 /// The models for the factory contract.
-mod factory_models;
+pub mod factory_models;
 /// The interface for the factory contract.
-mod interface;
+pub mod interface;
 /// The models related to the deployed worlds.
-mod world_models;
+pub mod world_models;
