@@ -3,9 +3,9 @@ version = 1
 
 [[package]]
 name = "dojo"
-version = "1.7.1"
+version = "1.7.2"
 source = "registry+https://scarbs.xyz/"
-checksum = "sha256:b792d9c526269f5265dd89f063da5db8daebb461f2dec2cdb712f420187b39a8"
+checksum = "sha256:e7c7f3c7e7ca89491aadabea9ed97cad5ff8a001ec7621afa1cadd257d2f7283"
 dependencies = [
  "dojo_cairo_macros",
 ]
@@ -18,9 +18,9 @@ checksum = "sha256:18059a9ac9ec2c0c708baad382728a99970b621b1eaab780fd9a8ec2dc975
 
 [[package]]
 name = "dojo_snf_test"
-version = "1.7.1"
+version = "1.7.2"
 source = "registry+https://scarbs.xyz/"
-checksum = "sha256:ce2f31c7e45769aa8786eb8daf69295a3c90b96a82a7a1d13fa2c9d639d2038a"
+checksum = "sha256:b965a6a533e6614607eab6f80a538c8737e18c793ab117550b9a412e2eafa35b"
 dependencies = [
  "dojo",
  "snforge_std",
@@ -28,15 +28,15 @@ dependencies = [
 
 [[package]]
 name = "snforge_scarb_plugin"
-version = "0.48.1"
+version = "0.50.0"
 source = "registry+https://scarbs.xyz/"
-checksum = "sha256:2dd27e8215eea8785b3930e9f452e11b429ca262b1c1fbb071bfc173b9ebc125"
+checksum = "sha256:8c29e5519362d22f2c802e4e348da846de3898cbaeac19b58aded6a009bf188e"
 
 [[package]]
 name = "snforge_std"
-version = "0.48.1"
+version = "0.50.0"
 source = "registry+https://scarbs.xyz/"
-checksum = "sha256:89f759fa685d48ed0ba7152d2ac2eb168da08dfa8b84b2bee96e203dc5b2413e"
+checksum = "sha256:db3a9de47952c699f8f3ce649b5b01f09c1f9c170f38b3c7a8df8e50a0188e9b"
 dependencies = [
  "snforge_scarb_plugin",
 ]

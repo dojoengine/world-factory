@@ -11,12 +11,12 @@ casm = true
 build-external-contracts = ["dojo::world::world_contract::world"]
 
 [dependencies]
-dojo = "1.7.1"
+dojo = "1.7.2"
 starknet = "2.12.2"
 
 [dev-dependencies]
-snforge_std = "0.48.0"
-dojo_snf_test = "1.7.1"
+snforge_std = "0.50.0"
+dojo_snf_test = "1.7.2"
 
 [features]
 default = []

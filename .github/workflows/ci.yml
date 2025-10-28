@@ -20,18 +20,17 @@ jobs:
           scarb-version: "2.12.2"
       - run: scarb fmt --check
 
-# Uncomment once dojo 1.7.2 is used.
-#  cairotest:
-#    needs: cairofmt
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: foundry-rs/setup-snfoundry@v3
-#      - uses: software-mansion/setup-scarb@v1
-#        with:
-#          scarb-version: "2.12.2"
-#      - uses: actions/checkout@v3
-#      - run: |
-#          snforge test
+  cairotest:
+    needs: cairofmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: foundry-rs/setup-snfoundry@v3
+      - uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: "2.12.2"
+      - uses: actions/checkout@v3
+      - run: |
+          snforge test
 
   cairobuild:
     needs: cairofmt
