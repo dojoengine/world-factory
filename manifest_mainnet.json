@@ -1,8 +1,8 @@
 {
   "world": {
     "class_hash": "0x57994b6a75fad550ca18b41ee82e2110e158c59028c4478109a67965a0e5b1e",
-    "address": "0x1d492807baa08400c3c76b827a19376292bae7f52220539184e2cb339cf268d",
-    "seed": "wfactory_2",
+    "address": "0x6dff4f9293504572c7fef37f0d9bfcd11665b9cb96d0b8fb6e93d1fde935c45",
+    "seed": "wfactory_1",
     "name": "world_factory",
     "entrypoints": [
       "uuid",
@@ -1479,7 +1479,7 @@
   },
   "contracts": [
     {
-      "address": "0x53412958d530f1a639c6d2928f27b13cbd65b0652edfd2817fb96c69d160e4b",
+      "address": "0x11097f05b158ae53d1ecb39f8e10196116f441aabd4e96c89d21f99b648cc19",
       "class_hash": "0x7bb3d1188317fe60fe94d5f6f69d8a0c5c9f47d7b26780782b6b057f8ac1890",
       "abi": [
         {

@@ -32,13 +32,14 @@ jobs:
       - run: |
           snforge test
 
-  cairobuild:
-    needs: cairofmt
-    runs-on: ubuntu-latest
-    steps:
-      - uses: software-mansion/setup-scarb@v1
-        with:
-          scarb-version: "2.12.2"
-      - uses: actions/checkout@v3
-      - run: |
-          scarb build
+# Uncomment once dojo 1.7.2 is used.
+#  cairobuild:
+#    needs: cairofmt
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: software-mansion/setup-scarb@v1
+#        with:
+#          scarb-version: "2.12.2"
+#      - uses: actions/checkout@v3
+#      - run: |
+#          scarb build
