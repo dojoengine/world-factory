@@ -113,6 +113,34 @@ pub mod factory {
                 }
             }
 
+            // Sync libraries.
+            let mut library_idx: u64 = 0;
+            for library in factory_config.libraries.span() {
+                if cursor.library_cursor > library_idx {
+                    library_idx += 1;
+                    continue;
+                }
+
+                // Class hashes are already known, so it may not be necessary to emit an other
+                // event.
+                let _class_hash = deployed_world
+                    .register_library(
+                        factory_config.default_namespace.clone(),
+                        *library.class_hash,
+                        library.name.clone(),
+                        library.version.clone(),
+                    );
+
+                library_idx += 1;
+                cursor.total_actions += 1;
+                cursor.library_cursor += 1;
+
+                if cursor.total_actions >= max_actions {
+                    factory_world.write_model(@cursor);
+                    return;
+                }
+            }
+
             // Sync models.
             //
             // TODO: we can optimize by first comparing the length of the array with the cursor, to

@@ -2,7 +2,7 @@
 
 use snforge_std::{DeclareResultTrait, declare};
 use starknet::ClassHash;
-use world_factory::factory_models::FactoryConfigContract;
+use world_factory::factory_models::{FactoryConfigContract, FactoryConfigLibrary};
 
 #[dojo::model]
 pub struct ModelA {
@@ -44,12 +44,13 @@ pub struct FakeWorldResources {
     pub models: Array<ClassHash>,
     pub contracts: Array<FactoryConfigContract>,
     pub events: Array<ClassHash>,
+    pub libraries: Array<FactoryConfigLibrary>,
 }
 
 pub fn declare_fake_world() -> FakeWorldResources {
     let model_contract = declare("m_ModelA").unwrap().contract_class();
-
     let my_contract_contract = declare("my_contract").unwrap().contract_class();
+    let fake_library_contract = declare("fake_library").unwrap().contract_class();
 
     FakeWorldResources {
         models: array![*model_contract.class_hash],
@@ -63,5 +64,12 @@ pub fn declare_fake_world() -> FakeWorldResources {
             },
         ],
         events: array![],
+        libraries: array![
+            FactoryConfigLibrary {
+                class_hash: *fake_library_contract.class_hash,
+                name: "fake_library",
+                version: "1_0_0",
+            },
+        ],
     }
 }

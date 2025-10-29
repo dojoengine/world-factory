@@ -19,6 +19,8 @@ pub struct FactoryDeploymentCursor {
     pub world_address: Option<ContractAddress>,
     /// The cursor for the contracts, counting the number of contracts registered.
     pub contract_cursor: u64,
+    /// The cursor for the libraries, counting the number of libraries registered.
+    pub library_cursor: u64,
     /// The cursor for the models, counting the number of models registered.
     pub model_cursor: u64,
     /// The cursor for the events, counting the number of events registered.
@@ -51,6 +53,17 @@ pub struct FactoryConfigContract {
     pub owner_of_resources: Span<felt252>,
 }
 
+/// Configuration for a library to be registered.
+#[derive(Serde, Clone, Debug, Introspect, DojoStore, Drop)]
+pub struct FactoryConfigLibrary {
+    /// The class hash of the library (must be declared before).
+    pub class_hash: ClassHash,
+    /// The name of the library.
+    pub name: ByteArray,
+    /// The version of the library.
+    pub version: ByteArray,
+}
+
 /// Configuration for the factory that will be used to deploy a world.
 #[derive(Clone)]
 #[dojo::model]
@@ -76,6 +89,8 @@ pub struct FactoryConfig {
     pub models: Array<ClassHash>,
     /// Events to be registered.
     pub events: Array<ClassHash>,
+    /// Libraries to be registered.
+    pub libraries: Array<FactoryConfigLibrary>,
 }
 
 /// Configuration for the factory that will be used to deploy a world.

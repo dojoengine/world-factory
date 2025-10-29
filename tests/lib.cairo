@@ -4,13 +4,14 @@ use dojo::world::{IWorldDispatcher, WorldStorage, WorldStorageTrait};
 use dojo_snf_test::{
     ContractDefTrait, NamespaceDef, TestResource, WorldStorageTestTrait, spawn_test_world,
 };
+use fake_lib::{IFakeLibDispatcherTrait, IFakeLibLibraryDispatcher};
 use fake_world::{IMyContractDispatcher, IMyContractDispatcherTrait, ModelA};
 use snforge_std::{CheatSpan, DeclareResultTrait, cheat_caller_address, declare};
 use world_factory::factory_models::{FactoryConfig, FactoryDeploymentCursor};
 use world_factory::interface::{IWorldFactoryDispatcher, IWorldFactoryDispatcherTrait};
 use world_factory::world_models::{WorldContract, WorldDeployed};
 
-
+mod fake_lib;
 mod fake_world;
 
 /// Deploys the dojo world of the factory and returns a dispatcher for the IWorldFactory interface.
@@ -60,6 +61,7 @@ fn test_factory_config() {
         contracts: fake_world_resources.contracts.clone(),
         models: fake_world_resources.models.clone(),
         events: fake_world_resources.events.clone(),
+        libraries: fake_world_resources.libraries.clone(),
     };
 
     factory.set_config(factory_config);
@@ -73,6 +75,7 @@ fn test_factory_config() {
     assert!(config.contracts.len() == fake_world_resources.contracts.len());
     assert!(config.models.len() == fake_world_resources.models.len());
     assert!(config.events.len() == fake_world_resources.events.len());
+    assert!(config.libraries.len() == fake_world_resources.libraries.len());
 }
 
 #[test]
@@ -95,6 +98,7 @@ fn test_factory_config_owner_only() {
         contracts: fake_world_resources.contracts.clone(),
         models: fake_world_resources.models.clone(),
         events: fake_world_resources.events.clone(),
+        libraries: fake_world_resources.libraries.clone(),
     };
 
     factory.set_config(factory_config.clone());
@@ -118,13 +122,14 @@ fn test_factory_deploy_and_confirm_cursor() {
 
     let factory_config = FactoryConfig {
         version: 1,
-        max_actions: 5,
+        max_actions: 10,
         world_class_hash: *world_class_hash,
         default_namespace,
         default_namespace_writer_all: true,
         contracts: fake_world_resources.contracts.clone(),
         models: fake_world_resources.models.clone(),
         events: fake_world_resources.events.clone(),
+        libraries: fake_world_resources.libraries.clone(),
     };
 
     factory.set_config(factory_config);
@@ -156,13 +161,14 @@ fn test_factory_deploy_and_confirm_world_deployed() {
 
     let factory_config = FactoryConfig {
         version: 1,
-        max_actions: 5,
+        max_actions: 10,
         world_class_hash: *world_class_hash,
         default_namespace,
         default_namespace_writer_all: true,
         contracts: fake_world_resources.contracts.clone(),
         models: fake_world_resources.models.clone(),
         events: fake_world_resources.events.clone(),
+        libraries: fake_world_resources.libraries.clone(),
     };
 
     factory.set_config(factory_config);
@@ -194,4 +200,12 @@ fn test_factory_deploy_and_confirm_world_deployed() {
     let model_a: ModelA = fake_world.read_model(0xff);
     assert!(model_a.key == 0xff);
     assert!(model_a.value == 0x123);
+
+    let (_, fake_lib_class_hash) = fake_world
+        .dns(@"fake_library_v1_0_0")
+        .expect('fake library not found');
+
+    let fake_lib = IFakeLibLibraryDispatcher { class_hash: fake_lib_class_hash };
+    let result = fake_lib.func_1();
+    assert!(result == 42);
 }
