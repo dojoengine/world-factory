@@ -1,8 +1,8 @@
 {
   "world": {
-    "class_hash": "0x57994b6a75fad550ca18b41ee82e2110e158c59028c4478109a67965a0e5b1e",
-    "address": "0x1d492807baa08400c3c76b827a19376292bae7f52220539184e2cb339cf268d",
-    "seed": "wfactory_2",
+    "class_hash": "0x691da17eb9ef169b385eaaf3a303972d187479e30be146d3337423eaec6272d",
+    "address": "0x14b1dd288bcc6568da0896c18e805c501b7e38713e5cd576906fe3ae0fb8962",
+    "seed": "wfactory_3",
     "name": "world_factory",
     "entrypoints": [
       "uuid",
@@ -266,6 +266,17 @@
             "outputs": [
               {
                 "type": "dojo::world::resource::Resource"
+              }
+            ],
+            "state_mutability": "view"
+          },
+          {
+            "type": "function",
+            "name": "world_version",
+            "inputs": [],
+            "outputs": [
+              {
+                "type": "core::felt252"
               }
             ],
             "state_mutability": "view"
@@ -1479,8 +1490,8 @@
   },
   "contracts": [
     {
-      "address": "0x53412958d530f1a639c6d2928f27b13cbd65b0652edfd2817fb96c69d160e4b",
-      "class_hash": "0x7bb3d1188317fe60fe94d5f6f69d8a0c5c9f47d7b26780782b6b057f8ac1890",
+      "address": "0x7a6f094f15f8c18704bfb19ffebcbc70b87e41674de97ebec7cb7ffe5c9581b",
+      "class_hash": "0x5cadfdcacf3ac17a136f04b4097d3ff2d1facd05393d394f3d15984ba10bc98",
       "abi": [
         {
           "type": "impl",
@@ -1589,6 +1600,24 @@
         },
         {
           "type": "struct",
+          "name": "world_factory::factory_models::FactoryConfigLibrary",
+          "members": [
+            {
+              "name": "class_hash",
+              "type": "core::starknet::class_hash::ClassHash"
+            },
+            {
+              "name": "name",
+              "type": "core::byte_array::ByteArray"
+            },
+            {
+              "name": "version",
+              "type": "core::byte_array::ByteArray"
+            }
+          ]
+        },
+        {
+          "type": "struct",
           "name": "world_factory::factory_models::FactoryConfig",
           "members": [
             {
@@ -1622,6 +1651,10 @@
             {
               "name": "events",
               "type": "core::array::Array::<core::starknet::class_hash::ClassHash>"
+            },
+            {
+              "name": "libraries",
+              "type": "core::array::Array::<world_factory::factory_models::FactoryConfigLibrary>"
             }
           ]
         },
@@ -1788,7 +1821,7 @@
   "models": [
     {
       "members": [],
-      "class_hash": "0x20a1588a9d064a03c2f310622e40e1b8ae6252ffcdacb695f4d2688f7426954",
+      "class_hash": "0x543cafcfff4589a9fa87434eec8bead24030cb70101a6573788c0bcfeb15750",
       "tag": "wf-FactoryConfig",
       "selector": "0x3751059678234ede81cb1dcbd857b98ad93598e7a943d1d63547211095dfeac"
     },
@@ -1800,7 +1833,7 @@
     },
     {
       "members": [],
-      "class_hash": "0x222b4633b88f915d2399826f2afdd43b81020d074dfb47ab89df9b2099d2c2e",
+      "class_hash": "0x2037594ca6a8bbc5e01c878125f4d1347347bf83c50a14a9ac5bcdc80ca8de5",
       "tag": "wf-FactoryDeploymentCursor",
       "selector": "0x752a901a506178e9335c4bd662486b79c44a224939c02af489313a0151052f3"
     },
