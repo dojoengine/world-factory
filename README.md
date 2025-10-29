@@ -24,6 +24,7 @@ Configuration is stored on-chain in the `FactoryConfig` model. Each config versi
 | `default_namespace_writer_all` | When `true`, every contract listed below gets writer access to the namespace. |
 | `contracts` | Array of `FactoryConfigContract` describing each Dojo contract to register and optionally initialize. |
 | `models` / `events` | Class hashes of the models and events you need live in the world. |
+| `libraries` | Array of `FactoryConfigLibrary` describing each Dojo library to register. |
 
 `FactoryConfigContract` lets you tailor per-contract behavior:
 - `selector`: Dojo selector used during registration.
@@ -31,10 +32,15 @@ Configuration is stored on-chain in the `FactoryConfig` model. Each config versi
 - `init_args`: Arguments passed to the contract’s `dojo_init`.
 - `writer_of_resources` / `owner_of_resources`: Extra granular permissions beyond the default namespace. You can ignore these if you are using `default_namespace_writer_all`.
 
+`FactoryConfigLibrary` lets you tailor per-library behavior:
+- `class_hash`: Declared class hash to register.
+- `name`: Name of the library.
+- `version`: Version of the library, without the prefix `v`.
+
 ### Setting the configuration
 If you want to test your config, you can use the `sozo inspect --output-factory` command to produce the serialized config string.
 
-1. Produce the serialized config string, either manually or via `sozo inspect --output-factory` (see [Dojo PR #3362](https://github.com/dojoengine/dojo/pull/3362)). You will want to run `sozo inspect` inside your project directory, and not the factory directory.
+1. Produce the serialized config string, either manually or via `sozo inspect --output-factory` (sozo 1.7.2+). You will want to run `sozo inspect` inside your project directory, and not the factory directory.
 2. Call the factory:
    ```bash
    sozo -P <PROFILE> execute factory set_config <VERSION> <...serialized config values...>
@@ -67,11 +73,6 @@ Once `completed` is `true`, the factory also writes:
 
 ## Working on the Project
 - Run `sozo build` before committing changes; it exercises the same pipeline the factory drives.
+- Run `snforge test` to run the tests, main test file is `tests/lib.cairo`.
 - The main contract lives in `src/factory.cairo`; configuration models are in `src/factory_models.cairo`; interfaces and storage helpers are in `src/interface.cairo` and `src/world_models.cairo`.
 - Comments in the source explain the cursor mechanics, permission sequencing, and known optimization opportunities. If you add new behavior, keep those comments in sync.
-- There is no dedicated test harness yet; needs to be tackled.
-
-## TODO
-- [ ] Split `FactoryConfig` into smaller models to remove the ~300 felt ceiling. We could have one `set_config` for the configs, but taking an enum to set config/models/contracts/events in separate calls.
-- [ ] Merge sozo PR to have the `--output-factory` flag upstream.
-- [ ] Add unit and integration tests for the factory with a simple dojo project in this repo.
