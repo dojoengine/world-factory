@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: software-mansion/setup-scarb@v1
         with:
-          scarb-version: "2.12.2"
+          scarb-version: "2.13.1"
       - run: scarb fmt --check
 
   cairotest:
@@ -27,7 +27,7 @@ jobs:
       - uses: foundry-rs/setup-snfoundry@v3
       - uses: software-mansion/setup-scarb@v1
         with:
-          scarb-version: "2.12.2"
+          scarb-version: "2.13.1"
       - uses: actions/checkout@v3
       - run: |
           snforge test
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: software-mansion/setup-scarb@v1
         with:
-          scarb-version: "2.12.2"
+          scarb-version: "2.13.1"
       - uses: actions/checkout@v3
       - run: |
           scarb build

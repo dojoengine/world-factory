@@ -285,7 +285,7 @@ pub mod factory {
             self: @ContractState, name: felt252, world_class_hash: ClassHash,
         ) -> IWorldDispatcher {
             let (world_address, _ctor_result) = starknet::syscalls::deploy_syscall(
-                world_class_hash.try_into().unwrap(), name, [world_class_hash.into()].span(), false,
+                world_class_hash.try_into().unwrap(), name, [].span(), false,
             )
                 .unwrap_syscall();
 
